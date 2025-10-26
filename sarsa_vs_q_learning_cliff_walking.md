@@ -304,59 +304,5 @@ plt.tight_layout()
 plt.show()
 ```
 
----
 
-## 6. Explanation — Faster script (line-by-line)
-
-The faster script shares the same components as the visual version, with these differences:
-
-- **TOTAL_EPISODES** is larger (200) so you can see learning trends across many episodes.
-- Performance metrics (`rewards_*_list`, `steps_*_list`) are stored each episode and plotted at the end to compare learning curves.
-- No artificial `time.sleep` delays are used — the script focuses on training speed and collects stats.
-
-**Important details:**
-- The SARSA update uses `Q(s', a')` where `a'` is chosen by the current policy (on-policy).
-- Q-Learning update uses `max_a' Q(s',a')` independent of the current action choice (off-policy).
-- Because CliffWalking is risky (stepping off cliff is catastrophic), SARSA may prefer safer routes under epsilon exploration.
-
----
-
-## 7. How to run (Colab / local)
-
-**Colab**
-1. Open Google Colab and create a new notebook.
-2. Install gymnasium if missing: `!pip install gymnasium`.
-3. Copy code cells into the notebook. Use small `TOTAL_EPISODES` first to test.
-4. If rendering shows blank images, ensure `render_mode='rgb_array'` and display with `plt.imshow`.
-
-**Local**
-1. Create a virtualenv and `pip install gymnasium matplotlib`.
-2. Run in Jupyter or a Python script. If running as a script, remove `clear_output` and use saving frames instead.
-
----
-
-## 8. Extensions & improvements (ideas for portfolio)
-
-- **Decay epsilon** with episodes (e.g., `epsilon = max(0.01, 1 - episode/1000)`) to encourage exploration early and exploitation later.
-- **Track moving-average rewards** instead of raw episode rewards to smooth plots.
-- **Use optimistic initial values** to encourage exploration.
-- **Compare on other environments** (e.g., `FrozenLake-v1` or custom gridworlds) to show generality.
-- **Evaluate deterministic policy** after training (set `epsilon=0`) and compare final paths.
-- **Add seed control** to make experiments reproducible: `env.reset(seed=...)`, `np.random.seed(...)`, `random.seed(...)`.
-- **Log & save Q-tables** and visualize greedy policy arrows on the grid.
-
----
-
-## 9. Appendix: Key RL concepts (brief)
-
-- **SARSA (State-Action-Reward-State-Action):** on-policy TD control algorithm. Update uses the action actually taken in the next state.
-- **Q-Learning:** off-policy TD control algorithm. Update uses the best possible next action value (max), regardless of policy.
-- **Epsilon-greedy:** exploration strategy that picks a random action with probability epsilon.
-- **Learning rate (alpha):** how much new information overrides old value.
-- **Discount factor (gamma):** preference for immediate vs delayed rewards.
-
----
-
-### If you want this as a single downloadable `.md` file for GitHub
-Tell me and I will export this document and provide a download link (or directly create a file in your workspace).
 
